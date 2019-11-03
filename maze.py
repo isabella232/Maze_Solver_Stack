@@ -2,6 +2,7 @@
 #	Name: Rutwik Tipireddy
 #	Program: Maze using stack 
 #	Date: 10/31/2018
+#   Python Conversion: Linda
 #*/
 
 #include<iostream>
@@ -40,7 +41,7 @@ class Stack:
         return self.arr[self.index]
 	# check if stack is full or empty
     def isFull(self):
-        return ((self.index + 1) == 50 if True else False)
+        return ((self.index + 1) == ROWS*COLUMNS if True else False)
     def isEmpty(self):
         return (self.index == 0 if True else False)
 
@@ -92,9 +93,7 @@ def gotoxy(x, y): #function to show cursor position on screen
 
 def inArray(rowCheck, columnCheck, arrSize, r, c): #check if a point on grid is already visited
 	for i in range(0, arrSize):
-		if (rowCheck[i] == r and columnCheck[i] == c):
-			print("r ",r)
-			print("c ",c)			
+		if (rowCheck[i] == r and columnCheck[i] == c):			
 			return True
 	return False
 
@@ -114,7 +113,6 @@ def solveMaze(maze):
     while maze[r][c] != 9618: #loop until exit found
         gotoxy(c,r)
         print(" ")
-
 #        
 #       if statements check: 
 #	    1) if the point is blank 
@@ -122,28 +120,28 @@ def solveMaze(maze):
 #	    3) if the path of the point did not already lead to a dead-end
 #	
         #check up
-        if ((maze[r - 1][c] == 32 )
+        if ((maze[r - 1][c] == 32 or maze[r -1][c] == 9618 )
 	    and ((r - 1) != rowStack.top())
 	    and not inArray(rowVisited, colVisited, ROWS*COLUMNS, r - 1, c)):
             rowStack.push(r)
             r = r-1
             columnStack.push(c)
         #check down
-        elif ((maze[r +1][c] == 32)
+        elif ((maze[r +1][c] == 32 or maze[r +1][c] == 9618)
 	    and ((r + 1) != rowStack.top())
 	    and not inArray(rowVisited, colVisited, ROWS*COLUMNS, r + 1, c)):
             rowStack.push(r) #add r value to stack and increment r to move down
             r= r +1
             columnStack.push(c) #add c value to stack
         #check left
-        elif ((maze[r][c-1] == 32) 
+        elif ((maze[r][c-1] == 32 or maze[r][c-1] == 9618) 
              and ((c - 1) != columnStack.top()) 
              and not inArray(rowVisited, colVisited, ROWS*COLUMNS, r, c - 1)):
             rowStack.push(r)
             columnStack.push(c)
             c = c - 1
         #check right
-        elif ((maze[r][c + 1] == 32)
+        elif ((maze[r][c + 1] == 32 or maze[r][c + 1] == 9618)
 	    and ((c+1) != columnStack.top())
 	    and not inArray(rowVisited, colVisited, ROWS*COLUMNS, r, c + 1)):
             rowStack.push(r)
@@ -164,7 +162,7 @@ def solveMaze(maze):
         gotoxy(c, r)
         print("X")
         #delay to see change
-        time.sleep(0.1)
+        time.sleep(0.05)
 		
 def main():
     #load maze and another grid to display after exit found
@@ -179,6 +177,7 @@ def main():
     #print grid to show maze completed
 	print("\n")
 	printGrid(done)
+	time.sleep(20)
 	return 0
 
 main()
