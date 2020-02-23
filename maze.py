@@ -1,9 +1,3 @@
-# include<iostream>
-# include<fstream>
-# include<string>
-# include<Windows.h>
-# include<array>
-
 ROWS = 30
 COLUMNS = 100
 import time
